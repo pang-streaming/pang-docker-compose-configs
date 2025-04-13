@@ -10,13 +10,13 @@ on:
         required: true
         type: string
     secrets:
-      LINUX_HOST:
+      HOST:
         required: true
-      LINUX_USERNAME:
+      USERNAME:
         required: true
-      LINUX_PRIVATE_KEY:
+      KEY:
         required: true
-      LINUX_SSH_PORT:
+      PORT:
         required: true
 
 jobs:
@@ -30,6 +30,7 @@ jobs:
           switches: -avzr --delete
           path: ${{ inputs.folder }}
           remote_path: ${{ inputs.remote_path }}
-          remote_user: ''
-          remote_key: ''
-          remote_host: ''
+          remote_host: ${{ secrets.HOST }}
+          remote_user: ${{ secrets.USERNAME }}
+          remote_key: ${{ secrets.KEY }}
+          remote_port: ${{ secrets.PORT }}
