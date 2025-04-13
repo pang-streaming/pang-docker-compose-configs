@@ -19,7 +19,7 @@ jobs:
         id: check_files
         uses: tj-actions/verify-changed-files@v20
         with:
-          files: jenkins/**
+          files: ./jenkins/**
 
       - name: Deploy to Jenkins Server
         if: steps.check_files.outputs.files_changed == 'true'
