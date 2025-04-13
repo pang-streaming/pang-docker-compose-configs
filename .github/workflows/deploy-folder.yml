@@ -9,15 +9,18 @@ on:
       remote_path:
         required: true
         type: string
-    secrets:
       HOST:
         required: true
+        type: string
       USERNAME:
         required: true
+        type: string
       KEY:
         required: true
+        type: string
       PORT:
         required: true
+        type: string
 
 jobs:
   deploy:
@@ -30,7 +33,7 @@ jobs:
           switches: -avzr --delete
           path: ${{ inputs.folder }}
           remote_path: ${{ inputs.remote_path }}
-          remote_host: ${{ secrets.HOST }}
-          remote_user: ${{ secrets.USERNAME }}
-          remote_key: ${{ secrets.KEY }}
-          remote_port: ${{ secrets.PORT }}
+          remote_host: ${{ inputs.HOST }}
+          remote_port: ${{ inputs.PORT }}
+          remote_user: ${{ inputs.USERNAME }}
+          remote_key: ${{ inputs.KEY }}
