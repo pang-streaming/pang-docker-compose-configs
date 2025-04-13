@@ -1,0 +1,35 @@
+name: deploy-folder
+
+on:
+  workflow_call:
+    inputs:
+      folder:
+        required: true
+        type: string
+      remote_path:
+        required: true
+        type: string
+    secrets:
+      LINUX_HOST:
+        required: true
+      LINUX_USERNAME:
+        required: true
+      LINUX_PRIVATE_KEY:
+        required: true
+      LINUX_SSH_PORT:
+        required: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: rsync deployments
+        uses: burnett01/rsync-deployments@7.0.2
+        with:
+          switches: -avzr --delete
+          path: ${{ inputs.folder }}
+          remote_path: ${{ inputs.remote_path }}
+          remote_user: ''
+          remote_key: ''
+          remote_host: ''

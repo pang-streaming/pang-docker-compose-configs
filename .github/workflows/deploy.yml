@@ -1,0 +1,28 @@
+name: deploy docker compose on server
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'jenkins/**'
+      - 'main/**'
+
+jobs:
+  deploy-jenkins:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Check if file
+        id: check_files
+        uses: tj-actions/changed-files@v19
+        with:
+          files: 'jenkins/**'
+
+      - name: Deploy to Jenkins Server
+        if: steps.check_files.outputs.files_changed == 'true'
+        run: |
+            echo "Deploying Jenkins files to Jenkins server"
+            scp -r ./jenkins/ user@jenkins-server:/path/to/destination
