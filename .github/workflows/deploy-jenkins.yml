@@ -14,12 +14,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Deploy to Jenkins Server
-        uses: ./.github/workflows
+      - name: rsync deployments
+        uses: burnett01/rsync-deployments@7.0.2
         with:
-          folder: /jenkins
+          switches: -avzr --delete
+          path: /jenkins
           remote_path: ${{ secrets.FOLDER_DIRECTORY }}
-          HOST: ${{ secrets.JENKINS_HOST }}
-          USERNAME: ${{ secrets.JENKINS_USERNAME }}
-          KEY: ${{ secrets.JENKINS_KEY }}
-          PORT: ${{ secrets.JENKINS_PORT }}
+          remote_host: ${{ secrets.JENKINS_HOST }}
+          remote_port: ${{ secrets.JENKINS_PORTT }}
+          remote_user: ${{ secrets.JENKINS_USERNAME }}
+          remote_key: ${{ secrets.JENKINS_KEY }}
