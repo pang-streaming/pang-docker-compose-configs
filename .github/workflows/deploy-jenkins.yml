@@ -18,6 +18,11 @@ jobs:
         run: |
           echo "${{ secrets.JENKINS_KEY }}" > key.pem
           chmod 600 key.pem
+      - name: Add Jenkins host to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.JENKINS_HOST }} >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
       - name: Rsync to server
         run: |
           rsync -avz -e "ssh -i key.pem -p ${{ secrets.JENKINS_PORT }}" ./jenkins/ ${{ secrets.JENKINS_USERNAME }}@${{ secrets.JENKINS_HOST }}:${{ secrets.FOLDER_DIRECTORY }}
