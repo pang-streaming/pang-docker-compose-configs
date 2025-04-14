@@ -21,6 +21,6 @@ jobs:
           path: /jenkins
           remote_path: ${{ secrets.FOLDER_DIRECTORY }}
           remote_host: ${{ secrets.JENKINS_HOST }}
-          remote_port: ${{ secrets.JENKINS_PORTT }}
+          remote_port: ${{ secrets.JENKINS_PORT }}
           remote_user: ${{ secrets.JENKINS_USERNAME }}
           remote_key: ${{ secrets.JENKINS_KEY }}
