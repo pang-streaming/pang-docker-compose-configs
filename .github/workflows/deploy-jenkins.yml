@@ -12,16 +12,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: rsync deployments
-        uses: burnett01/rsync-deployments@7.0.2
+        uses: appleboy/scp-action@v0.1.7
         with:
-          switches: -avzr --delete
-          legacy_allow_rsa_hostkeys: "true"
-          path: jenkins/
-          remote_path: ${{ secrets.FOLDER_DIRECTORY }}
-          remote_host: ${{ secrets.JENKINS_HOST }}
-          remote_port: ${{ secrets.JENKINS_PORT }}
-          remote_user: ${{ secrets.JENKINS_USERNAME }}
-          remote_key: ${{ secrets.JENKINS_KEY }}
+          host: ${{ secrets.JENKINS_HOST }}
+          username: ${{ secrets.JENKINS_USERNAME }}
+          port: ${{ secrets.JENKINS_PORT }}
+          key: ${{ secrets.JENKINS_KEY }}
+          source: jenkins/*
+          target: ${{ secrets.FOLDER_DIRECTORY }}
+
+#          switches: -avzr --delete
+#          legacy_allow_rsa_hostkeys: "true"
+#          path: jenkins/
+#          remote_path: ${{ secrets.FOLDER_DIRECTORY }}
+#          remote_host: ${{ secrets.JENKINS_HOST }}
+#          remote_port: ${{ secrets.JENKINS_PORT }}
+#          remote_user: ${{ secrets.JENKINS_USERNAME }}
+#          remote_key: ${{ secrets.JENKINS_KEY }}
