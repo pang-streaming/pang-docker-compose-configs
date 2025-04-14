@@ -1,0 +1,26 @@
+name: deploy docker compose on server
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'main/**'
+
+jobs:
+  deploy-jenkins:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: rsync deployments
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.JENKINS_HOST }}
+          username: ${{ secrets.JENKINS_USERNAME }}
+          port: ${{ secrets.JENKINS_PORT }}
+          key: ${{ secrets.JENKINS_KEY }}
+          source: main/*.*
+          target: ${{ secrets.FOLDER_DIRECTORY }}
+          strip_components: 1
