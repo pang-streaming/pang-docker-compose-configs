@@ -14,13 +14,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: rsync deployments
-        uses: burnett01/rsync-deployments@7.0.2
-        with:
-          switches: -avzr --delete
-          path: /jenkins
-          remote_path: ${{ secrets.FOLDER_DIRECTORY }}
-          remote_host: ${{ secrets.JENKINS_HOST }}
-          remote_port: ${{ secrets.JENKINS_PORT }}
-          remote_user: ${{ secrets.JENKINS_USERNAME }}
-          remote_key: ${{ secrets.JENKINS_KEY }}
+      - name: Setup SSH Key
+        run: |
+          echo "${{ secrets.JENKINS_KEY }}" > key.pem
+          chmod 600 key.pem
+      - name: Rsync to server
+        run: |
+          rsync -avz -e "ssh -i key.pem -p ${{ secrets.JENKINS_PORT }}" ./jenkins/ ${{ secrets.JENKINS_USERNAME }}@${{ secrets.JENKINS_HOST }}:${{ secrets.FOLDER_DIRECTORY }}
+
+#      - name: rsync deployments
+#        uses: burnett01/rsync-deployments@7.0.2
+#        with:
+#          switches: -avzr --delete
+#          path: /jenkins
+#          remote_path: ${{ secrets.FOLDER_DIRECTORY }}
+#          remote_host: ${{ secrets.JENKINS_HOST }}
+#          remote_port: ${{ secrets.JENKINS_PORT }}
+#          remote_user: ${{ secrets.JENKINS_USERNAME }}
+#          remote_key: ${{ secrets.JENKINS_KEY }}
