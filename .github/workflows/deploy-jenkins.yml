@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - main
-#    paths:
-#      - 'jenkins/**'
+    paths:
+      - 'jenkins/**'
 
 jobs:
   deploy-jenkins:
@@ -21,14 +21,5 @@ jobs:
           username: ${{ secrets.JENKINS_USERNAME }}
           port: ${{ secrets.JENKINS_PORT }}
           key: ${{ secrets.JENKINS_KEY }}
-          source: ./jenkins/*
+          source: ./jenkins/*.*
           target: ${{ secrets.FOLDER_DIRECTORY }}
-
-#          switches: -avzr --delete
-#          legacy_allow_rsa_hostkeys: "true"
-#          path: jenkins/
-#          remote_path: ${{ secrets.FOLDER_DIRECTORY }}
-#          remote_host: ${{ secrets.JENKINS_HOST }}
-#          remote_port: ${{ secrets.JENKINS_PORT }}
-#          remote_user: ${{ secrets.JENKINS_USERNAME }}
-#          remote_key: ${{ secrets.JENKINS_KEY }}
