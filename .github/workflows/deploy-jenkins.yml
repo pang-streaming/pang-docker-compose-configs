@@ -21,7 +21,7 @@ jobs:
           username: ${{ secrets.JENKINS_USERNAME }}
           port: ${{ secrets.JENKINS_PORT }}
           key: ${{ secrets.JENKINS_KEY }}
-          source: jenkins/*
+          source: /jenkins/*
           target: ${{ secrets.FOLDER_DIRECTORY }}
 
 #          switches: -avzr --delete
