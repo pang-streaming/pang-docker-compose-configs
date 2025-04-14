@@ -14,26 +14,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup SSH Key
-        run: |
-          echo "${{ secrets.JENKINS_KEY }}" > key.pem
-          chmod 600 key.pem
-      - name: Add Jenkins host to known hosts
-        run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan -H ${{ secrets.JENKINS_HOST }} >> ~/.ssh/known_hosts
-          chmod 644 ~/.ssh/known_hosts
-      - name: Rsync to server
-        run: |
-          rsync -avz -e "ssh -i key.pem -p ${{ secrets.JENKINS_PORT }}" ./jenkins/ ${{ secrets.JENKINS_USERNAME }}@${{ secrets.JENKINS_HOST }}:${{ secrets.FOLDER_DIRECTORY }}
-
-#      - name: rsync deployments
-#        uses: burnett01/rsync-deployments@7.0.2
-#        with:
-#          switches: -avzr --delete
-#          path: /jenkins
-#          remote_path: ${{ secrets.FOLDER_DIRECTORY }}
-#          remote_host: ${{ secrets.JENKINS_HOST }}
-#          remote_port: ${{ secrets.JENKINS_PORT }}
-#          remote_user: ${{ secrets.JENKINS_USERNAME }}
-#          remote_key: ${{ secrets.JENKINS_KEY }}
+      - name: rsync deployments
+        uses: burnett01/rsync-deployments@7.0.2
+        with:
+          switches: -avzr --delete
+          legacy_allow_rsa_hostkeys: true
+          path: /jenkins
+          remote_path: ${{ secrets.FOLDER_DIRECTORY }}
+          remote_host: ${{ secrets.JENKINS_HOST }}
+          remote_port: ${{ secrets.JENKINS_PORT }}
+          remote_user: ${{ secrets.JENKINS_USERNAME }}
+          remote_key: ${{ secrets.JENKINS_KEY }}
