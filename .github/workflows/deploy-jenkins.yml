@@ -18,8 +18,8 @@ jobs:
         uses: burnett01/rsync-deployments@7.0.2
         with:
           switches: -avzr --delete
-          legacy_allow_rsa_hostkeys: true
-          path: /jenkins
+          legacy_allow_rsa_hostkeys: "true"
+          path: jenkins/
           remote_path: ${{ secrets.FOLDER_DIRECTORY }}
           remote_host: ${{ secrets.JENKINS_HOST }}
           remote_port: ${{ secrets.JENKINS_PORT }}
