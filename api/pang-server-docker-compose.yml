@@ -1,4 +1,28 @@
 services:
+  pang-server-blue:
+    container_name: pang-server-blue
+#    image:
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://pang-server-blue/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    networks:
+      - nginx-net
+
+  pang-server-green:
+    container_name: pang-server-green
+# image:
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://pang-server-green/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    networks:
+      - nginx-net
+
   nginx:
     container_name: nginx
     image: nginx:latest
