@@ -1,4 +1,15 @@
 services:
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - /etc/nginx/nginx.conf:/etc/nginx/nginx.conf
+      # 볼륨 추가하기
+    networks:
+      - nginx-net
+    restart: unless-stopped
   jenkins:
     image: jenkins/jenkins:lts
     container_name: jenkins
