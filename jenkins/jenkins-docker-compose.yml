@@ -27,4 +27,4 @@ volumes:
 
 networks:
   nginx-net:
-    external: true
+    driver: bridge
