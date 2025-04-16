@@ -1,0 +1,26 @@
+name: deploy docker compose on server
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'api/**'
+
+jobs:
+  deploy-jenkins:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: rsync deployments
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.API_HOST }}
+          username: ${{ secrets.API_USERNAME }}
+          port: ${{ secrets.API_PORT }}
+          key: ${{ secrets.API_KEY }}
+          source: api/*.*
+          target: ${{ secrets.FOLDER_DIRECTORY }}
+          strip_components: 1
