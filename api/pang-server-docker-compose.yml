@@ -1,0 +1,15 @@
+services:
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - /etc/nginx/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - nginx-net
+    restart: unless-stopped
+
+networks:
+  nginx-net:
+    external: true
