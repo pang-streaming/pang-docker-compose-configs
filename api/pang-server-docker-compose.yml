@@ -1,7 +1,7 @@
 services:
   pang-server-blue:
     container_name: pang-server-blue
-#    image:
+    image: pangstream/pang-api-server:latest
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://pang-server-blue/health" ]
       interval: 10s
@@ -13,7 +13,7 @@ services:
 
   pang-server-green:
     container_name: pang-server-green
-# image:
+    image: pangstream/pang-api-server:latest
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://pang-server-green/health" ]
       interval: 10s
